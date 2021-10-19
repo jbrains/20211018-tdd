@@ -36,11 +36,7 @@ public class AddFractionsTest {
         }
 
         public Fraction plus(Fraction that) {
-            if (that.integerValue == 0) {
-                return new Fraction(this.integerValue);
-            } else {
-                return new Fraction(this.integerValue + that.integerValue);
-            }
+            return new Fraction(this.integerValue + that.integerValue);
         }
 
         public int intValue() {
