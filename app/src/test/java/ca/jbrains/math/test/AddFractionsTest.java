@@ -38,6 +38,13 @@ public class AddFractionsTest {
                 new Fraction(2, 5).plus(new Fraction(3, 10)));
     }
 
+    @Test
+    void denominatorsAreRelativelyPrime() {
+        Assertions.assertEquals(
+                new Fraction(47, 21),
+                new Fraction(5, 3).plus(new Fraction(4, 7)));
+    }
+
     public static class Fraction {
         private int numerator;
         private int denominator;
