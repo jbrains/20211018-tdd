@@ -6,33 +6,29 @@ import org.junit.jupiter.api.Test;
 public class AddFractionsTest {
     @Test
     void zeroPlusZero() {
-        Fraction sum = new Fraction(0).plus(new Fraction(0));
-        Assertions.assertEquals(0, sum.intValue());
+        Assertions.assertEquals(new Fraction(0), new Fraction(0).plus(new Fraction(0)));
     }
 
     @Test
     void notZeroPlusZero() {
-        Fraction sum = new Fraction(7).plus(new Fraction(0));
-        Assertions.assertEquals(7, sum.intValue());
+        Assertions.assertEquals(new Fraction(7), new Fraction(7).plus(new Fraction(0)));
     }
 
     @Test
     void zeroPlusNotZero() {
-        Fraction sum = new Fraction(0).plus(new Fraction(3));
-        Assertions.assertEquals(3, sum.intValue());
+        Assertions.assertEquals(new Fraction(3), new Fraction(0).plus(new Fraction(3)));
     }
 
     @Test
     void notZeroPlusNotZero() {
-        Fraction sum = new Fraction(8).plus(new Fraction(4));
-        Assertions.assertEquals(12, sum.intValue());
+        Assertions.assertEquals(new Fraction(12), new Fraction(8).plus(new Fraction(4)));
     }
 
     @Test
     void sameDenominators() {
-        Fraction sum = new Fraction(1, 5).plus(new Fraction(2, 5));
-        Assertions.assertEquals(3, sum.getNumerator());
-        Assertions.assertEquals(5, sum.getDenominator());
+        Assertions.assertEquals(
+                new Fraction(3, 5),
+                new Fraction(1, 5).plus(new Fraction(2, 5)));
     }
 
     public static class Fraction {
