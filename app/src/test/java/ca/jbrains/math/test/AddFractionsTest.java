@@ -52,6 +52,16 @@ public class AddFractionsTest {
                 new Fraction(1, 8).plus(new Fraction(5, 12)));
     }
 
+    @Test
+    void rejectZeroDenominator() {
+        try {
+            new Fraction(7, 0);
+            Assertions.fail("How did you create a Fraction with 0 denominator?!");
+        } catch (IllegalArgumentException expected) {
+            // Expected path
+        }
+    }
+
     public static class Fraction {
         private int numerator;
         private int denominator;
@@ -61,6 +71,9 @@ public class AddFractionsTest {
         }
 
         public Fraction(int numerator, int denominator) {
+            if (denominator == 0)
+                throw new IllegalArgumentException("The denominator of a Fraction cannot be 0.");
+
             this.numerator = numerator;
             this.denominator = denominator;
         }
