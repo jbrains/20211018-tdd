@@ -62,9 +62,7 @@ public class SellOneItemTest {
 
             if ("".equals(barcode))
                 display.setText("Scanning error: empty barcode");
-            else if ("12345".equals(barcode))
-                display.setText(pricesByBarcode.get(barcode));
-            else if ("23456".equals(barcode))
+            else if ("12345".equals(barcode) || "23456".equals(barcode))
                 display.setText(pricesByBarcode.get(barcode));
             else
                 display.setText(String.format("Product not found: %s", barcode));
