@@ -2,6 +2,7 @@ package ca.jbrains.pos.test;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.HashMap;
 
@@ -18,6 +19,25 @@ public class SellOneItemTest {
         sale.onBarcode("12345");
 
         Assertions.assertEquals("EUR 7.95", display.getText());
+    }
+
+    @Test
+    void productFound_mockDisplay() {
+        // Compare this version to the original version of the test.
+        // Which do you prefer?
+        // This version is more abstract, but does it seem "too strange" to you?
+        // Not everyone likes this approach, but it's a good one to know about.
+        Display display = Mockito.mock(Display.class);
+
+        Sale sale = new Sale(display, barcode -> "EUR 7.95");
+
+        sale.onBarcode("12345");
+
+        // "Assert that the price EUR 7.95 was displayed"
+        Mockito.verify(display).displayPrice("EUR 7.95");
+
+        // Only use verify when you are checking a _desired side-effect_ in a test.
+        // Don't use verify for queries; only use them for _actions_.
     }
 
     @Test
