@@ -62,30 +62,18 @@ public class SellOneItemTest {
 
         public void onBarcode(String barcode) {
             if ("".equals(barcode)) {
-                displayEmptyBarcodeMessage();
+                display.displayEmptyBarcodeMessage();
             } else {
                 String price = findPrice(barcode);
                 if (price != null)
-                    displayPrice(price);
+                    display.displayPrice(price);
                 else
-                    displayProductNotFoundMessage(barcode);
+                    display.displayProductNotFoundMessage(barcode);
             }
-        }
-
-        private void displayPrice(String price) {
-            display.setText(price);
         }
 
         private String findPrice(String barcode) {
             return pricesByBarcode.get(barcode);
-        }
-
-        private void displayProductNotFoundMessage(String barcode) {
-            display.setText(String.format("Product not found: %s", barcode));
-        }
-
-        private void displayEmptyBarcodeMessage() {
-            display.setText("Scanning error: empty barcode");
         }
     }
 
@@ -96,8 +84,16 @@ public class SellOneItemTest {
             return text;
         }
 
-        public void setText(String text) {
-            this.text = text;
+        public void displayPrice(String price) {
+            this.text = price;
+        }
+
+        public void displayProductNotFoundMessage(String barcode) {
+            this.text = String.format("Product not found: %s", barcode);
+        }
+
+        public void displayEmptyBarcodeMessage() {
+            this.text = "Scanning error: empty barcode";
         }
     }
 }
