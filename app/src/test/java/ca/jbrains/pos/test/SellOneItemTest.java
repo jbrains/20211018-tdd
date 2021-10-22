@@ -9,10 +9,12 @@ import java.util.Map;
 public class SellOneItemTest {
     @Test
     void productFound() {
-        Display display = new Display();
-        Sale sale = new Sale(display, new Catalog(new HashMap<String, String>() {{
-            put("12345", "EUR 7.95");
-        }}));
+        // Notice that this test is now simpler, because we can simulate the abstraction of Catalog
+        // directly with a lambda expression or a stub, instead of using a lookup table as a
+        // "Lightweight Implementation".
+        // This lambda expression _is_ the Catalog!
+        InMemoryDisplay display = new InMemoryDisplay();
+        Sale sale = new Sale(display, barcode -> "EUR 7.95");
 
         sale.onBarcode("12345");
 
@@ -21,8 +23,8 @@ public class SellOneItemTest {
 
     @Test
     void anotherProductFound() {
-        Display display = new Display();
-        Sale sale = new Sale(display, new Catalog(new HashMap<String, String>() {{
+        InMemoryDisplay display = new InMemoryDisplay();
+        Sale sale = new Sale(display, new InMemoryCatalog(new HashMap<String, String>() {{
             put("23456", "EUR 12.50");
         }}));
 
@@ -33,8 +35,8 @@ public class SellOneItemTest {
 
     @Test
     void productNotFound() {
-        Display display = new Display();
-        Sale sale = new Sale(display, new Catalog(new HashMap<String, String>()));
+        InMemoryDisplay display = new InMemoryDisplay();
+        Sale sale = new Sale(display, new InMemoryCatalog(new HashMap<String, String>()));
 
         sale.onBarcode("99999");
 
@@ -43,7 +45,7 @@ public class SellOneItemTest {
 
     @Test
     void emptyBarcode() {
-        Display display = new Display();
+        InMemoryDisplay display = new InMemoryDisplay();
         Sale sale = new Sale(display, null);
 
         sale.onBarcode("");
@@ -73,33 +75,37 @@ public class SellOneItemTest {
         }
     }
 
-    public static class Display {
+    public static class InMemoryDisplay implements Display {
         private String text;
 
         public String getText() {
             return text;
         }
 
+        @Override
         public void displayPrice(String price) {
             this.text = price;
         }
 
+        @Override
         public void displayProductNotFoundMessage(String barcode) {
             this.text = String.format("Product not found: %s", barcode);
         }
 
+        @Override
         public void displayEmptyBarcodeMessage() {
             this.text = "Scanning error: empty barcode";
         }
     }
 
-    public static class Catalog {
+    public static class InMemoryCatalog implements Catalog {
         private Map<String, String> pricesByBarcode;
 
-        public Catalog(Map<String, String> pricesByBarcode) {
+        public InMemoryCatalog(Map<String, String> pricesByBarcode) {
             this.pricesByBarcode = pricesByBarcode;
         }
 
+        @Override
         public String findPrice(String barcode) {
             return pricesByBarcode.get(barcode);
         }
