@@ -72,10 +72,6 @@ public class SellOneItemTest {
             }
         }
 
-        private void findPriceThenDisplayPrice(String barcode) {
-            displayPrice(findPrice(barcode));
-        }
-
         private void displayPrice(String price) {
             display.setText(price);
         }
