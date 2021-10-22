@@ -36,7 +36,11 @@ public class SellOneItemTest {
     @Test
     void productNotFound() {
         InMemoryDisplay display = new InMemoryDisplay();
-        Sale sale = new Sale(display, new InMemoryCatalog(new HashMap<String, String>()));
+        // This now more-directly expresses the code of "product not found" by saying
+        // "Pretend that the price of this barcode is null" without worrying about
+        // how to "trick" the Catalog implementation into doing this. Even when the
+        // implementation of Catalog changes, this test remains the same.
+        Sale sale = new Sale(display, barcode -> null);
 
         sale.onBarcode("99999");
 
